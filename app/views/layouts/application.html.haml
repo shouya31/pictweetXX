@@ -26,9 +26,14 @@
           %a{:href => "/"} PicTweet
         - if user_signed_in?
           .user_nav.grid-6
-            = link_to 'ログアウト', destroy_user_session_path, method: 'delete'
+            %span
+              = @nickname
+              %ul.user__info
+                %li
+                  = link_to 'マイページ', user_path(@tweets)
+                  = link_to 'ログアウト', destroy_user_session_path, method: 'delete'
             %a.post{:href => "/tweets/new"} 投稿する
-            
+
         - else 
           .user_nav.grid-6
             = link_to "ログイン", new_user_session_path, class: 'post' 
