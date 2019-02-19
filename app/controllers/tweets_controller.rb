@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
-  before_action :move_to_index, except: [:index]
-  before_action :set_params, only: [:destroy, :edit, :update]
+  before_action :move_to_index, except: [:index, :show]
+  before_action :set_params, only: [:destroy, :edit, :update, :show]
   def index
 	@tweets = Tweet.includes(:user).order('created_at DESC').page(params[:page]).per(5)
   end
@@ -23,8 +23,11 @@ class TweetsController < ApplicationController
 
   def update
     @tweet.update(tweet_params) if @tweet.user_id == current_user.id
-    binding.pry
     redirect_to root_path
+  end
+
+  def show
+    @comments = @tweet.comments.includes(:user)
   end
 
   private
