@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :move_to_index except: [:index]
+  before_action :move_to_index, except: [:index]
   def index
 	@tweets = Tweet.order('created_at DESC').page(params[:page]).per(5)
   end
@@ -8,6 +8,7 @@ class TweetsController < ApplicationController
 
   def create
   	@tweet = Tweet.new(tweet_params)
+    binding.pry
   	@tweet.save
   	redirect_to root_path
   	
@@ -15,7 +16,7 @@ class TweetsController < ApplicationController
 
   private
   def tweet_params
-  	params.permit(:name, :image, :text)
+  	params.permit(:name, :image, :text).merge(user_id: current_user.id)
   end
 
   def move_to_index
