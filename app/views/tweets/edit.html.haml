@@ -1,0 +1,7 @@
+.contents.row
+  = form_with model: @tweet do |f|
+    %h3
+      編集する
+    = f.text_field :image, value: @tweet.image
+    = f.text_field :text,  value: @tweet.text
+    = f.submit   
